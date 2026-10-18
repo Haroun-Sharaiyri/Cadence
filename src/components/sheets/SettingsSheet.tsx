@@ -214,6 +214,19 @@ export const SettingsSheet: React.FC<SettingsSheetProps> = ({
             </div>
           </div>
         </div>
+
+        {/* Bottom Close Action for easy thumb reach on mobile */}
+        <button
+          type="button"
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={() => {
+            triggerHaptic('light');
+            onClose();
+          }}
+          className="w-full min-h-[48px] rounded-2xl bg-[var(--secondary-system-fill)] hover:bg-[var(--system-fill)] active:scale-[0.98] transition-all text-[16px] font-semibold text-[var(--label)] border border-[var(--separator)] cursor-pointer flex items-center justify-center"
+        >
+          Close Settings
+        </button>
       </div>
     </BottomSheet>
   );
