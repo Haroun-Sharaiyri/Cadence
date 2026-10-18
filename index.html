@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Viewport & Safe-Area configuration -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Cadence</title>
+    <meta name="description" content="Apple-grade daily checklist & cadence manager" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- iOS Safari Standalone PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Cadence" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Dynamic Theme Color for Safari Chrome -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F2F7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
+
+    <!-- Apple Touch Icons & Favicons -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <link rel="alternate icon" type="image/png" href="/icons/icon-192x192.png" />
+
+    <!-- iPhone 17 Air Splash Screens (420pt x 912pt @3x = 1260px x 2736px) -->
+    <link
+      rel="apple-touch-startup-image"
+      media="(device-width: 420px) and (device-height: 912px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)"
+      href="/splash/splash-light-1260x2736.png"
+    />
+    <link
+      rel="apple-touch-startup-image"
+      media="(device-width: 420px) and (device-height: 912px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)"
+      href="/splash/splash-dark-1260x2736.png"
+    />
+    <!-- Fallback Splash Screen -->
+    <link rel="apple-touch-startup-image" href="/splash/splash-light-1260x2736.png" />
+
+    <!-- Anti-FOUC Immediate Theme Application Script -->
+    <script>
+      (function () {
+        try {
+          var mq = window.matchMedia('(prefers-color-scheme: dark)');
+          var applyTheme = function (isDark) {
+            if (isDark) {
+              document.documentElement.classList.add('dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+            }
+          };
+          applyTheme(mq.matches);
+          if (mq.addEventListener) {
+            mq.addEventListener('change', function (e) {
+              applyTheme(e.matches);
+            });
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-systemGroupedBackground text-label antialiased select-none">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,436 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Apple iOS 26 Design Tokens & Color Palette
+   ========================================================================== */
+:root {
+  /* System Accents (WCAG AA high-contrast tuned for light surfaces) */
+  --system-blue: #0055D4;
+  --system-blue-rgb: 0, 85, 212;
+  --system-cyan: #006894;
+  --system-cyan-rgb: 0, 104, 148;
+  --system-green: #18792E;
+  --system-green-rgb: 24, 121, 46;
+  --system-red: #C91F16;
+  --system-red-rgb: 201, 31, 22;
+  --system-orange: #AD5700;
+  --system-orange-rgb: 173, 87, 0;
+  --system-gray: #8E8E93;
+
+  /* Backgrounds */
+  --system-background: #FFFFFF;
+  --secondary-system-background: #F2F2F7;
+  --tertiary-system-background: #FFFFFF;
+  --system-grouped-background: #F2F2F7;
+  --secondary-system-grouped-background: #FFFFFF;
+  --tertiary-system-grouped-background: #F2F2F7;
+
+  /* Labels (Text - WCAG AA >= 4.5:1 on grouped and glass surfaces) */
+  --label: #000000;
+  --secondary-label: rgba(44, 44, 48, 0.82);
+  --tertiary-label: rgba(44, 44, 48, 0.74);
+  --quaternary-label: rgba(44, 44, 48, 0.55);
+
+  /* Separators & Fills */
+  --separator: rgba(60, 60, 67, 0.29);
+  --opaque-separator: #C6C6C8;
+  --system-fill: rgba(120, 120, 128, 0.20);
+  --secondary-system-fill: rgba(120, 120, 128, 0.16);
+  --tertiary-system-fill: rgba(118, 118, 128, 0.12);
+  --quaternary-system-fill: rgba(116, 116, 128, 0.08);
+
+  /* Liquid Glass Materials - Light Mode */
+  --glass-surface-bg: rgba(255, 255, 255, 0.72);
+  --glass-surface-border: rgba(255, 255, 255, 0.45);
+  --glass-surface-specular: inset 0 1px 0.5px 0 rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+  --glass-blur: blur(24px) saturate(190%);
+
+  /* Navigation & Floating Tab Bar */
+  --nav-bar-bg: rgba(255, 255, 255, 0.75);
+  --tab-bar-bg: rgba(255, 255, 255, 0.82);
+  --tab-bar-border: rgba(0, 0, 0, 0.08);
+  --tab-bar-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --tab-active-indicator: rgba(0, 85, 212, 0.12);
+
+  /* Goal Hero Card - Vibrant Indigo-Sapphire-Cyan Prism */
+  --goal-card-bg: linear-gradient(135deg, rgba(238, 244, 255, 0.94) 0%, rgba(224, 242, 254, 0.88) 48%, rgba(243, 232, 255, 0.86) 100%);
+  --goal-card-border: rgba(14, 116, 244, 0.28);
+  --goal-card-glow: 0 12px 36px -4px rgba(14, 116, 244, 0.18), 0 4px 16px -2px rgba(139, 92, 246, 0.14);
+
+  /* Progress Ring */
+  --progress-ring-track: rgba(120, 120, 128, 0.16);
+  --progress-ring-fill: var(--system-blue);
+
+  /* Safe Areas */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* System Accents (WCAG AA high-contrast tuned for dark surfaces) */
+    --system-blue: #5CB0FF;
+    --system-blue-rgb: 92, 176, 255;
+    --system-cyan: #70D7FF;
+    --system-cyan-rgb: 112, 215, 255;
+    --system-green: #32D74B;
+    --system-green-rgb: 50, 215, 75;
+    --system-red: #FF6961;
+    --system-red-rgb: 255, 105, 97;
+    --system-orange: #FFB340;
+    --system-orange-rgb: 255, 179, 64;
+    --system-gray: #98989D;
+
+    /* Backgrounds */
+    --system-background: #060813;
+    --secondary-system-background: #141826;
+    --tertiary-system-background: #1E2336;
+    --system-grouped-background: #060813;
+    --secondary-system-grouped-background: #141826;
+    --tertiary-system-grouped-background: #1E2336;
+
+    /* Labels (Text) */
+    --label: #FFFFFF;
+    --secondary-label: rgba(235, 235, 245, 0.84);
+    --tertiary-label: rgba(235, 235, 245, 0.72);
+    --quaternary-label: rgba(235, 235, 245, 0.55);
+
+    /* Separators & Fills */
+    --separator: rgba(148, 163, 184, 0.22);
+    --opaque-separator: #2E3446;
+    --system-fill: rgba(120, 128, 160, 0.36);
+    --secondary-system-fill: rgba(120, 128, 160, 0.28);
+    --tertiary-system-fill: rgba(118, 126, 158, 0.22);
+    --quaternary-system-fill: rgba(118, 126, 158, 0.16);
+
+    /* Liquid Glass Materials - Dark Mode */
+    --glass-surface-bg: rgba(20, 25, 40, 0.68);
+    --glass-surface-border: rgba(255, 255, 255, 0.14);
+    --glass-surface-specular: inset 0 1px 0.5px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0.5px 0 rgba(0, 0, 0, 0.45);
+    --glass-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.45);
+    --glass-blur: blur(28px) saturate(200%);
+
+    /* Navigation & Floating Tab Bar */
+    --nav-bar-bg: rgba(15, 19, 32, 0.76);
+    --tab-bar-bg: rgba(18, 23, 38, 0.84);
+    --tab-bar-border: rgba(255, 255, 255, 0.16);
+    --tab-bar-shadow: 0 12px 40px rgba(0, 0, 0, 0.65);
+    --tab-active-indicator: rgba(92, 176, 255, 0.22);
+
+    /* Goal Hero Card - Deep Royal Indigo, Sapphire & Cyan Glass */
+    --goal-card-bg: linear-gradient(135deg, rgba(29, 43, 83, 0.88) 0%, rgba(17, 36, 72, 0.84) 50%, rgba(44, 24, 78, 0.82) 100%);
+    --goal-card-border: rgba(92, 176, 255, 0.38);
+    --goal-card-glow: 0 14px 44px -6px rgba(10, 132, 255, 0.32), 0 4px 20px -2px rgba(139, 92, 246, 0.24);
+
+    /* Progress Ring */
+    --progress-ring-track: rgba(148, 163, 184, 0.22);
+    --progress-ring-fill: var(--system-blue);
+  }
+
+  .bg-\[var\(--system-blue\)\] {
+    background-color: #0055D4 !important;
+  }
+
+  .bg-\[var\(--system-red\)\] {
+    background-color: #C91F16 !important;
+  }
+}
+
+.dark {
+  --system-blue: #5CB0FF;
+  --system-blue-rgb: 92, 176, 255;
+  --system-cyan: #70D7FF;
+  --system-cyan-rgb: 112, 215, 255;
+  --system-green: #32D74B;
+  --system-green-rgb: 50, 215, 75;
+  --system-red: #FF6961;
+  --system-red-rgb: 255, 105, 97;
+  --system-orange: #FFB340;
+  --system-orange-rgb: 255, 179, 64;
+  --system-gray: #98989D;
+
+  --system-background: #060813;
+  --secondary-system-background: #141826;
+  --tertiary-system-background: #1E2336;
+  --system-grouped-background: #060813;
+  --secondary-system-grouped-background: #141826;
+  --tertiary-system-grouped-background: #1E2336;
+
+  --label: #FFFFFF;
+  --secondary-label: rgba(235, 235, 245, 0.84);
+  --tertiary-label: rgba(235, 235, 245, 0.72);
+  --quaternary-label: rgba(235, 235, 245, 0.55);
+
+  --separator: rgba(148, 163, 184, 0.22);
+  --opaque-separator: #2E3446;
+  --system-fill: rgba(120, 128, 160, 0.36);
+  --secondary-system-fill: rgba(120, 128, 160, 0.28);
+  --tertiary-system-fill: rgba(118, 126, 158, 0.22);
+  --quaternary-system-fill: rgba(118, 126, 158, 0.16);
+
+  --glass-surface-bg: rgba(20, 25, 40, 0.68);
+  --glass-surface-border: rgba(255, 255, 255, 0.14);
+  --glass-surface-specular: inset 0 1px 0.5px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0.5px 0 rgba(0, 0, 0, 0.45);
+  --glass-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.45);
+  --glass-blur: blur(28px) saturate(200%);
+
+  --nav-bar-bg: rgba(15, 19, 32, 0.76);
+  --tab-bar-bg: rgba(18, 23, 38, 0.84);
+  --tab-bar-border: rgba(255, 255, 255, 0.16);
+  --tab-bar-shadow: 0 12px 40px rgba(0, 0, 0, 0.65);
+  --tab-active-indicator: rgba(92, 176, 255, 0.22);
+
+  --goal-card-bg: linear-gradient(135deg, rgba(29, 43, 83, 0.88) 0%, rgba(17, 36, 72, 0.84) 50%, rgba(44, 24, 78, 0.82) 100%);
+  --goal-card-border: rgba(92, 176, 255, 0.38);
+  --goal-card-glow: 0 14px 44px -6px rgba(10, 132, 255, 0.32), 0 4px 20px -2px rgba(139, 92, 246, 0.24);
+
+  --progress-ring-track: rgba(148, 163, 184, 0.22);
+  --progress-ring-fill: var(--system-blue);
+}
+
+.dark .bg-\[var\(--system-blue\)\] {
+  background-color: #0055D4 !important;
+}
+
+.dark .bg-\[var\(--system-red\)\] {
+  background-color: #C91F16 !important;
+}
+
+/* ==========================================================================
+   Anti-Web-Ism Resets & Native iOS Locks
+   ========================================================================== */
+* {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  inset: 0;
+  overscroll-behavior: none;
+  background-color: var(--system-grouped-background);
+  color: var(--label);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "SF Pro Display", "SF Pro Text", "Inter", -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent accidental text selection on UI chrome */
+body, button, [role="button"], [role="tab"], nav, header, span {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Permit text selection strictly inside editable text fields */
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Strict Anti-Zoom Lock on all inputs */
+input, textarea, select {
+  font-size: 17px !important;
+  line-height: 22px;
+}
+
+/* Touch Action manipulation eliminates 300ms double-tap zoom delay */
+button, a, input, [role="button"], [role="tab"] {
+  touch-action: manipulation;
+}
+
+/* ==========================================================================
+   Apple HIG Typography System
+   ========================================================================== */
+.type-large-title {
+  font-size: 34px;
+  line-height: 41px;
+  font-weight: 700;
+  letter-spacing: 0.37px;
+}
+
+.type-title-1 {
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 700;
+  letter-spacing: 0.36px;
+}
+
+.type-title-2 {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+}
+
+.type-title-3 {
+  font-size: 20px;
+  line-height: 25px;
+  font-weight: 600;
+  letter-spacing: 0.38px;
+}
+
+.type-headline {
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 600;
+  letter-spacing: -0.41px;
+}
+
+.type-body {
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 400;
+  letter-spacing: -0.41px;
+}
+
+.type-callout {
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+}
+
+.type-subheadline {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 400;
+  letter-spacing: -0.24px;
+}
+
+.type-footnote {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  letter-spacing: -0.08px;
+}
+
+.type-footnote-semibold {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  letter-spacing: -0.08px;
+}
+
+.type-caption-1 {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: 0.0px;
+}
+
+.type-caption-2 {
+  font-size: 11px;
+  line-height: 13px;
+  font-weight: 600;
+  letter-spacing: 0.07px;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ==========================================================================
+   Liquid Glass Materials, Aurora Canvas & Section Accent Utilities
+   ========================================================================== */
+.app-aurora-bg {
+  background-color: var(--system-grouped-background);
+  background-image:
+    radial-gradient(ellipse 80% 55% at 12% 0%, rgba(245, 158, 11, 0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 75% 50% at 88% 8%, rgba(14, 165, 233, 0.16) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 55% at 18% 92%, rgba(168, 85, 247, 0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 75% 55% at 88% 90%, rgba(16, 185, 129, 0.12) 0%, transparent 65%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-aurora-bg {
+    background-color: #060813;
+    background-image:
+      radial-gradient(ellipse 85% 55% at 10% -5%, rgba(245, 158, 11, 0.18) 0%, transparent 62%),
+      radial-gradient(ellipse 80% 50% at 92% 4%, rgba(14, 165, 233, 0.22) 0%, transparent 64%),
+      radial-gradient(ellipse 75% 55% at 15% 96%, rgba(168, 85, 247, 0.20) 0%, transparent 65%),
+      radial-gradient(ellipse 80% 55% at 90% 92%, rgba(16, 185, 129, 0.17) 0%, transparent 65%);
+  }
+}
+
+.dark .app-aurora-bg {
+  background-color: #060813;
+  background-image:
+    radial-gradient(ellipse 85% 55% at 10% -5%, rgba(245, 158, 11, 0.18) 0%, transparent 62%),
+    radial-gradient(ellipse 80% 50% at 92% 4%, rgba(14, 165, 233, 0.22) 0%, transparent 64%),
+    radial-gradient(ellipse 75% 55% at 15% 96%, rgba(168, 85, 247, 0.20) 0%, transparent 65%),
+    radial-gradient(ellipse 80% 55% at 90% 92%, rgba(16, 185, 129, 0.17) 0%, transparent 65%);
+}
+
+.glass-surface {
+  background-color: var(--glass-surface-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 0.5px solid var(--glass-surface-border);
+  box-shadow: var(--glass-surface-specular), var(--glass-shadow);
+}
+
+.glass-nav-bar {
+  background-color: var(--nav-bar-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 0.5px solid var(--separator);
+}
+
+.glass-tab-bar {
+  background-color: var(--tab-bar-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 0.5px solid var(--tab-bar-border);
+  box-shadow: var(--tab-bar-shadow);
+}
+
+.hairline-separator {
+  height: 0.5px;
+  background-color: var(--separator);
+}
+
+.momentum-scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  height: 100%;
+}
+
+.tap-target-44 {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pt-safe {
+  padding-top: var(--sat);
+}
+
+.pb-safe {
+  padding-bottom: var(--sab);
+}
+
+.pl-safe {
+  padding-left: var(--sal);
+}
+
+.pr-safe {
+  padding-right: var(--sar);
+}
+
+.pb-tab-clearance {
+  padding-bottom: calc(var(--sab) + 88px);
+}
+
