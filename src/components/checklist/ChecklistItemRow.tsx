@@ -324,6 +324,22 @@ export const ChecklistItemRow: React.FC<ChecklistItemRowProps> = ({
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Quick Delete button on hover / focus (when !isEditMode) */}
+          {!isEditMode && (
+            <button
+              type="button"
+              aria-label={`Delete ${item.title}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                triggerHaptic('heavy');
+                onDelete(item.id);
+              }}
+              className="opacity-0 group-hover:opacity-70 hover:!opacity-100 focus:opacity-100 transition-opacity p-2 text-[var(--tertiary-label)] hover:text-[var(--system-red)] rounded-full hover:bg-[var(--system-red)]/10 min-w-[36px] min-h-[36px] flex items-center justify-center shrink-0 cursor-pointer"
+            >
+              <Trash2 className="w-4 h-4 stroke-[1.8]" />
+            </button>
+          )}
         </div>
 
         {/* ── Hairline Separator ───────────────────────────────────────────── */}

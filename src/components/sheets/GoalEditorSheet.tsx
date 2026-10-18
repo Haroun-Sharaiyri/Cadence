@@ -91,6 +91,7 @@ export const GoalEditorSheet: React.FC<GoalEditorSheetProps> = ({
         <button
           type="button"
           onClick={onClose}
+          onPointerDown={(e) => e.stopPropagation()}
           className="min-h-[44px] min-w-[44px] flex items-center justify-start text-[17px] text-[var(--system-blue)] active:opacity-60 bg-transparent border-none cursor-pointer p-0"
         >
           Cancel
@@ -101,6 +102,7 @@ export const GoalEditorSheet: React.FC<GoalEditorSheetProps> = ({
           type="button"
           disabled={!canSave}
           onClick={handleSave}
+          onPointerDown={(e) => e.stopPropagation()}
           className="min-h-[44px] min-w-[44px] flex items-center justify-end text-[17px] font-semibold text-[var(--system-blue)] disabled:opacity-35 active:opacity-60 bg-transparent border-none cursor-pointer p-0"
         >
           {isSubmitting ? 'Saving…' : 'Save'}

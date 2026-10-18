@@ -57,6 +57,7 @@ export const ClearCompletedSheet: React.FC<ClearCompletedSheetProps> = ({
           <button
             type="button"
             onClick={handleConfirm}
+            onPointerDown={(e) => e.stopPropagation()}
             className="w-full min-h-[48px] rounded-2xl bg-[var(--system-red)] text-white font-semibold text-[17px] shadow-sm hover:opacity-95 active:scale-[0.985] transition-all flex items-center justify-center gap-2 border-none cursor-pointer"
           >
             <Trash2 className="w-5 h-5 stroke-[2]" />
@@ -66,6 +67,7 @@ export const ClearCompletedSheet: React.FC<ClearCompletedSheetProps> = ({
           <button
             type="button"
             onClick={onClose}
+            onPointerDown={(e) => e.stopPropagation()}
             className="w-full min-h-[48px] rounded-2xl bg-[var(--secondary-system-fill)] text-[var(--label)] font-semibold text-[17px] hover:bg-[var(--tertiary-system-fill)] active:scale-[0.985] transition-all border-none cursor-pointer"
           >
             Cancel

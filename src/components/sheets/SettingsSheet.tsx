@@ -64,7 +64,11 @@ export const SettingsSheet: React.FC<SettingsSheetProps> = ({
       headerTrailing={
         <button
           type="button"
-          onClick={onClose}
+          onClick={() => {
+            triggerHaptic('light');
+            onClose();
+          }}
+          onPointerDown={(e) => e.stopPropagation()}
           className="min-h-[44px] min-w-[44px] flex items-center justify-end text-[17px] font-semibold text-[var(--system-blue)] active:opacity-60 bg-transparent border-none cursor-pointer p-0"
         >
           Done

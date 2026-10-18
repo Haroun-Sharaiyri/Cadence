@@ -17,6 +17,10 @@ interface ViteEnv {
   VITE_SUPABASE_ANON_KEY?: string;
 }
 
+const DEFAULT_SUPABASE_URL = 'https://hkncvdgrvsopjtqlsiyt.supabase.co';
+const DEFAULT_SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhrbmN2ZGdydnNvcGp0cWxzaXl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIyNTg0MDIsImV4cCI6MjEwNzgzNDQwMn0.JpNcBD_wBgZuwMuUiXt8j63dD-FUVuGjNTIP7jcv5xs';
+
 let cachedClient: SupabaseClient | null = null;
 let customClientForTesting: SupabaseClient | null = null;
 let clientInitPromise: Promise<SupabaseClient | null> | null = null;
@@ -34,8 +38,8 @@ export function isSupabaseConfigured(): boolean {
   }
 
   const env = ((typeof import.meta !== 'undefined' && import.meta.env) || {}) as ViteEnv;
-  const url = env.VITE_SUPABASE_URL?.trim();
-  const anonKey = env.VITE_SUPABASE_ANON_KEY?.trim();
+  const url = (env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL)?.trim();
+  const anonKey = (env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY)?.trim();
 
   return Boolean(
     url &&
@@ -75,8 +79,8 @@ export async function getSupabaseAsync(): Promise<SupabaseClient | null> {
   }
 
   const env = ((typeof import.meta !== 'undefined' && import.meta.env) || {}) as ViteEnv;
-  const url = env.VITE_SUPABASE_URL!.trim();
-  const anonKey = env.VITE_SUPABASE_ANON_KEY!.trim();
+  const url = (env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL)!.trim();
+  const anonKey = (env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY)!.trim();
 
   clientInitPromise = (async () => {
     try {

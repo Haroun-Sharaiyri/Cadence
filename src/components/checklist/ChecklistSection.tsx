@@ -134,7 +134,7 @@ export const ChecklistSection: React.FC<ChecklistSectionProps> = ({
   onDeleteItem,
   onReorderItem,
   onAddItem,
-  isSwipeable = false,
+  isSwipeable = true,
   accent,
   className = '',
 }) => {

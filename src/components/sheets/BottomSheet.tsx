@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect, useCallback } from 'react';
-import { motion, AnimatePresence, useReducedMotion, type PanInfo } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useDragControls, type PanInfo } from 'framer-motion';
 import { clsx } from 'clsx';
 import { SPRING_PRESETS, REDUCED_MOTION_TRANSITION } from '../../utils/motion';
 import { triggerHaptic } from '../../utils/haptics';
@@ -31,6 +31,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
   headerTrailing,
 }) => {
   const shouldReduceMotion = useReducedMotion();
+  const dragControls = useDragControls();
 
   // Escape key dismiss listener
   const handleKeyDown = useCallback(
@@ -60,8 +61,8 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
   }, [isOpen]);
 
   const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    // Dismiss if dragged down > 100px or downward flick velocity > 400px/s
-    if (info.offset.y > 100 || info.velocity.y > 400) {
+    // Dismiss if dragged down > 80px or downward flick velocity > 300px/s
+    if (info.offset.y > 80 || info.velocity.y > 300) {
       triggerHaptic('light');
       onClose();
     }
@@ -76,7 +77,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
           aria-label={title || 'Modal Sheet'}
           className="fixed inset-0 z-50 flex items-end sm:items-center justify-center select-none"
         >
-          {/* Dimmed Blurred Backdrop */}
+          {/* Dimmed Blurred Backdrop - Click to Close */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -87,7 +88,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
                 : { duration: 0.24, ease: 'easeOut' }
             }
             onClick={onClose}
-            className="fixed inset-0 bg-black/40 backdrop-blur-md"
+            className="fixed inset-0 bg-black/50 backdrop-blur-md cursor-pointer"
             aria-hidden="true"
           />
 
@@ -114,6 +115,8 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
                 : SPRING_PRESETS.sheet
             }
             drag="y"
+            dragListener={false}
+            dragControls={dragControls}
             dragConstraints={{ top: 0, bottom: 0 }}
             dragElastic={{ top: 0.04, bottom: 0.75 }}
             onDragEnd={handleDragEnd}
@@ -132,9 +135,12 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
           >
             {/* Top iOS Drag Handle Bar */}
             {showDragHandle && (
-              <div className="w-full pt-3 pb-1 flex items-center justify-center cursor-grab active:cursor-grabbing touch-none">
+              <div
+                onPointerDown={(e) => dragControls.start(e)}
+                className="w-full pt-3 pb-2 flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none"
+              >
                 <div
-                  className="w-9 h-1 rounded-full bg-[var(--system-fill)]"
+                  className="w-10 h-1.5 rounded-full bg-[var(--system-fill)]"
                   aria-hidden="true"
                 />
               </div>

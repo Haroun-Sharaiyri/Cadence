@@ -6,8 +6,7 @@
 
 import React, { useState, useRef, Suspense, lazy } from 'react';
 import { useIsDesktop } from './hooks/useMediaQuery';
-import { CollapsingHeader } from './components/common/CollapsingHeader';
-import { FloatingTabBar, type TabId } from './components/common/FloatingTabBar';
+import type { TabId } from './components/common/FloatingTabBar';
 import { DesktopLayout } from './components/desktop/DesktopLayout';
 import { formatHeaderDate } from './utils/time';
 import { useChecklist } from './hooks/useChecklist';
@@ -15,6 +14,7 @@ import { useDoneCelebration } from './hooks/useDoneCelebration';
 import { useSyncState } from './hooks/useSyncState';
 import { signOut, getCurrentUser } from './sync/supabaseClient';
 import { syncEngine } from './sync/syncEngine';
+import { Settings as SettingsIcon } from 'lucide-react';
 import { GoalHeroCard } from './components/goal/GoalHeroCard';
 import { ClearCompletedTrigger } from './components/sheets/ClearCompletedTrigger';
 import { ChecklistSection } from './components/checklist/ChecklistSection';
@@ -123,6 +123,7 @@ export const App: React.FC = () => {
         items={morningItems}
         progress={morningProgress}
         isEditMode={isEditMode}
+        isSwipeable={true}
         emptyMessage="No morning habits yet. Tap + to add habits."
         onAddItem={addItem}
         onToggleItem={toggleItem}
@@ -138,6 +139,7 @@ export const App: React.FC = () => {
         items={todayWorkItems}
         progress={todayWorkProgress}
         isEditMode={isEditMode}
+        isSwipeable={true}
         emptyMessage="No work habits yet. Tap + to add habits."
         onAddItem={addItem}
         onToggleItem={toggleItem}
@@ -153,6 +155,7 @@ export const App: React.FC = () => {
         items={eveningItems}
         progress={eveningProgress}
         isEditMode={isEditMode}
+        isSwipeable={true}
         emptyMessage="No evening habits yet. Tap + to add habits."
         onAddItem={addItem}
         onToggleItem={toggleItem}
@@ -210,42 +213,81 @@ export const App: React.FC = () => {
           />
         </div>
       ) : (
-        /* ── Mobile View (< 1024px) ──────────────────────────────────── */
-        <div className="relative h-full w-full flex flex-col">
-          {/* Native Momentum Scroll Container */}
+        /* ── Mobile View (< 1024px) - Full Display ───────────────────── */
+        <div className="relative h-full w-full flex flex-col overflow-hidden">
+          {/* Native Momentum Scroll Container - Edge-to-Edge Full Display */}
           <div
             ref={scrollContainerRef}
             className="flex-1 overflow-y-auto overscroll-contain px-4"
             style={{
-              paddingTop: 'calc(env(safe-area-inset-top, 0px) + 44px)',
-              paddingBottom: 'calc(env(safe-area-inset-bottom, 20px) + 88px)',
+              paddingTop: 'calc(env(safe-area-inset-top, 0px) + 16px)',
+              paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 32px)',
             }}
           >
-            {/* Collapsing Header Top Chrome */}
-            <CollapsingHeader
-              title={activeTab === 'today' ? 'Today' : 'Work'}
-              subtitle={activeTab === 'today' ? formatHeaderDate() : undefined}
-              isEditMode={isEditMode}
-              onToggleEditMode={toggleEditMode}
-              onOpenSettings={openSettings}
-              scrollContainerRef={scrollContainerRef}
-            />
+            {/* Fluid In-Flow Header (No fixed header/footer blocks) */}
+            <div className="pt-2 pb-4 flex flex-col gap-3">
+              {/* Header Top Row: Date, App Name, Settings Action */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-[12px] font-semibold uppercase tracking-wider text-[var(--secondary-label)]">
+                    {formatHeaderDate()}
+                  </div>
+                  <h1 className="text-[28px] font-extrabold tracking-tight text-[var(--label)] leading-tight">
+                    Cadence
+                  </h1>
+                </div>
 
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    aria-label="Settings and sync"
+                    onClick={openSettings}
+                    className="w-10 h-10 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/10 active:scale-95 transition-all text-[var(--secondary-label)] hover:text-[var(--label)] border border-black/5 dark:border-white/10 backdrop-blur-md cursor-pointer"
+                  >
+                    <SettingsIcon className="w-5 h-5 stroke-[1.8]" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Seamless Segmented Control: [ Today | Work ] */}
+              <div className="flex items-center p-1 rounded-xl bg-black/[0.06] dark:bg-white/[0.08] backdrop-blur-lg border border-black/5 dark:border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('today')}
+                  className={`flex-1 py-1.5 px-3 rounded-lg text-[14px] font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeTab === 'today'
+                      ? 'bg-white dark:bg-white/20 text-[var(--label)] shadow-sm'
+                      : 'text-[var(--secondary-label)] hover:text-[var(--label)]'
+                  }`}
+                >
+                  <span>Today</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('work')}
+                  className={`flex-1 py-1.5 px-3 rounded-lg text-[14px] font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeTab === 'work'
+                      ? 'bg-white dark:bg-white/20 text-[var(--label)] shadow-sm'
+                      : 'text-[var(--secondary-label)] hover:text-[var(--label)]'
+                  }`}
+                >
+                  <span>Work</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Seamless Content Flow */}
             {activeTab === 'today' ? (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 pb-2">
                 {goalHeroElement}
                 {todaySectionsContent}
               </div>
             ) : (
-              workSectionContent
+              <div className="flex flex-col gap-4 pb-2">
+                {workSectionContent}
+              </div>
             )}
           </div>
-
-          {/* Floating Glass Capsule Tab Bar */}
-          <FloatingTabBar
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-          />
         </div>
       )}
 
